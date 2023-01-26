@@ -2,9 +2,12 @@ version: '3.5'
 
 services:
   mongodb:
-    container_name: mongodb_database
+    container_name: db
     image: mongo:6.0
     ports:
-      - 27017:27017
-    env_file:
-      - metabase/config/mongo.env
+      - ${MONGO_INITDB_PORT}:27017
+    environment:
+      MONGO_INITDB_HOST: ${MONGO_INITDB_HOST}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
