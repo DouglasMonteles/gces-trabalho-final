@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  mongodb:
+    container_name: mongodb_database
+    image: mongo:6.0
+    ports:
+      - 27017:27017
+    env_file:
+      - metabase/config/mongo.env
