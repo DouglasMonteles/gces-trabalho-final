@@ -6,8 +6,16 @@ services:
     image: mongo:6.0
     ports:
       - ${MONGO_INITDB_PORT}:27017
+    volumes:
+      - ./data/mongodb:/data/db
+    networks:
+      - metabase_network
     environment:
       MONGO_INITDB_HOST: ${MONGO_INITDB_HOST}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+
+networks:
+  metabase_network:
+    driver: bridge

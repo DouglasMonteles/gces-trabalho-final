@@ -1,1 +1,5 @@
+# Arquivo com as variáveis de ambiente
 .env
+
+# Volume do banco de dados
+/data/mongodb
