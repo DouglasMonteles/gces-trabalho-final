@@ -32,7 +32,10 @@ services:
 
   application:
     container_name: application
-    build: .
+    build: 
+      context: .
+      args:
+        POETRY_PYPI_TOKEN_PYPI: ${POETRY_PYPI_TOKEN_PYPI} 
     volumes:
       - ./data/application:/application-data
     networks:
