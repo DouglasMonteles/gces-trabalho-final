@@ -30,6 +30,14 @@ services:
     depends_on:
       - mongodb
 
+  application:
+    container_name: application
+    build: .
+    volumes:
+      - ./data/application:/application-data
+    networks:
+      - metabase_network
+
 networks:
   metabase_network:
     driver: bridge
