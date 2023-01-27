@@ -15,6 +15,20 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  
+  metabase:
+    container_name: metabase
+    image: metabase/metabase
+    ports:
+      - 3000:3000
+    environment:
+      - MB_DB_FILE=${MB_DB_FILE}
+    volumes:
+      - ./data/metabase:/metabase-data
+    networks:
+      - metabase_network
+    depends_on:
+      - mongodb
 
 networks:
   metabase_network:

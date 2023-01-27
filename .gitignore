@@ -3,3 +3,6 @@
 
 # Volume do banco de dados
 /data/mongodb
+
+# Volume do metabase
+/data/metabase
