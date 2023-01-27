@@ -5,6 +5,11 @@ include .env
 up:
 	docker compose up -d
 
+.PHONY: up with build
+
+build:
+	docker compose up --build -d
+
 .PHONY: down
 
 down:
