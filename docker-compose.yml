@@ -2,12 +2,12 @@ version: '3.5'
 
 services:
   mongodb:
-    container_name: db
+    container_name: mongo
     image: mongo:6.0
     ports:
       - ${MONGO_INITDB_PORT}:27017
     volumes:
-      - ./data/mongodb:/data/db
+      - ./data/mongodb:/data/mongo
     networks:
       - metabase_network
     environment:
