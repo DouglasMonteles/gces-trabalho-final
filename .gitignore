@@ -6,3 +6,8 @@
 
 # Volume do metabase
 /data/metabase
+
+# Arquivos compilados da documentação
+/build
+/html
+/latex
