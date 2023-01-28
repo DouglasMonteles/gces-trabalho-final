@@ -42,6 +42,16 @@ services:
     networks:
       - metabase_network
 
+  documentation:
+    container_name: docs
+    build: 
+      context: .
+      dockerfile: ./docker/documentation.Dockerfile
+    volumes:
+      - ./data/docs:/docs-data
+    networks:
+      - metabase_network
+
 networks:
   metabase_network:
     driver: bridge
