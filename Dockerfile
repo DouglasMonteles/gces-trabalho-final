@@ -17,4 +17,10 @@ RUN poetry config installer.max-workers 10
 
 RUN poetry install --no-interaction --no-ansi -vvv --no-root
 
-CMD ["sh", "scripts/poetry_deploy.sh", "scripts/start.sh"]
+RUN poetry lock
+
+RUN chmod +x scripts/poetry_deploy.sh
+
+RUN scripts/poetry_deploy.sh
+
+CMD ["sh", "scripts/start.sh"]
