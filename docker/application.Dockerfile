@@ -15,9 +15,9 @@ ENV POETRY_PYPI_TOKEN_PYPI=${POETRY_PYPI_TOKEN_PYPI}
 
 RUN poetry config installer.max-workers 10
 
-RUN poetry install --no-interaction --no-ansi -vvv --no-root
-
 RUN poetry lock
+
+RUN poetry install --no-interaction --no-ansi -vvv --no-root
 
 RUN chmod +x scripts/poetry_deploy.sh
 
