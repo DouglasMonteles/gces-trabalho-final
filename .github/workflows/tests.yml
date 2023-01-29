@@ -26,10 +26,8 @@ jobs:
         run: |
           chmod +x ./scripts/poetry_tests.sh
       
-      - name: Levantar  os containers e rodar os testes
+      - name: Levantar  o container da aplicação e rodar os testes
         run: |
-          docker-compose up -d --build
-          docker-compose logs
-          docker-compose ps
-          docker-compose run application sh -c "./scripts/poetry_tests.sh"
+          docker build -t application-testes -f "docker/application.Dockerfile" .
+          docker run application-testes sh -c "./scripts/poetry_tests.sh"
           
