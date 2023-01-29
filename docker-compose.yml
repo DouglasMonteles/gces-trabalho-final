@@ -44,24 +44,15 @@ services:
 
   documentation:
     container_name: docs
+    expose:
+      - 8080
     build: 
       context: .
       dockerfile: ./docker/documentation.Dockerfile
-    volumes:
-      - ./data/docs:/docs-data
+    ports:
+      - 8080:8080
     networks:
       - metabase_network
-
-  documentation_server:
-    container_name: nginx
-    restart: always
-    image: nginx:1.23.1-alpine
-    ports:
-      - "8003:80"
-    volumes:
-      - ./html:/usr/share/nginx/html
-    depends_on:
-      - documentation
 
 networks:
   metabase_network:
