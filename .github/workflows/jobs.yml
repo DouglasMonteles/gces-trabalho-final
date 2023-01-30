@@ -1,0 +1,83 @@
+name: tests
+
+on: 
+  push:
+    branches:
+      - 'main'
+      - 'master'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          context: "{{defaultContext}}:/"
+          file: ./docker/application.Dockerfile
+      
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+
+      - name: Habilitando a execução do script de testes
+        run: |
+          chmod +x ./scripts/poetry_tests.sh
+      
+      - name: Levantar  o container da aplicação e rodar os testes
+        run: |
+          docker build -t application-testes -f "docker/application.Dockerfile" .
+          docker run application-testes sh -c "./scripts/poetry_tests.sh"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          context: "{{defaultContext}}:/"
+          file: ./docker/application.Dockerfile
+          build-args: |
+            POETRY_PYPI_TOKEN_PYPI=${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
+      
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+
+      - name: Habilitando a execução do script de build e deploy
+        run: |
+          chmod +x ./scripts/poetry_deploy.sh
+      
+      - name: Levantar  o container da aplicação e rodar o build e o deploy
+        run: |
+          docker build --build-arg POETRY_PYPI_TOKEN_PYPI=${{ secrets.POETRY_PYPI_TOKEN_PYPI }} -t application-deploy -f "docker/application.Dockerfile" .
+          docker run application-deploy sh -c "./scripts/poetry_deploy.sh"
+
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          context: "{{defaultContext}}:/"
+          file: ./docker/documentation.Dockerfile
+      
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+
+      - name: Habilitando a execução do script da documentação
+        run: |
+          chmod +x ./scripts/docs_without_server.sh
+      
+      - name: Levantar  o container da aplicação e gerar a documentação
+        run: |
+          docker build -t docs -f "docker/documentation.Dockerfile" .
+          docker run docs sh -c "./scripts/docs_without_server.sh"
