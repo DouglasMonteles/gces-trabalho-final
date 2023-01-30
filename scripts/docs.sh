@@ -22,7 +22,7 @@ sphinx-build -b html source docs
 printf "\n[Info]: Gerando os arquivos html e latex\n"
 make html
 
-cd html
+cd build/html
 
 http-server -s
 
