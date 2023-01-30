@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "application-gces-2-2022-douglasmonteles"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Douglas Monteles <silvadouglas328@gmail.com>"]
 readme = "README.md"
